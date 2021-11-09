@@ -3,22 +3,22 @@
 
 int main(){
 
-    Stack new_stack;
+    Stack<float> new_stack;
     new_stack.get_size();
 
-    new_stack.push('a');
-    new_stack.push('b');
-    new_stack.push('c');
-    new_stack.push('d');
+    new_stack.push(1.25);
+    new_stack.push(2.25);
+    new_stack.push(3.75);
+    new_stack.push(4.75);
 
 
-    std::cout << new_stack.get_size();
-
-    new_stack.reverse();
 
 
-    std::cout << new_stack.pop();
-    std::cout << new_stack.peek()->data;
+    Stack<float> new_stack2;
+    new_stack2 = new_stack;
+    printStack(new_stack2);
+    // std::cout << new_stack.empty();
+    // std::cout << new_stack.peek()->data;
 
     return 0;
 }
