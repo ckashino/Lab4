@@ -1,4 +1,15 @@
 #include <iostream>
+#include <stdio.h>
+
+#define KNRM  "\x1B[0m" // colours
+#define KRED  "\x1B[31m"
+#define KGRN  "\x1B[32m"
+#define KYEL  "\x1B[33m"
+#define KBLU  "\x1B[34m"
+#define KMAG  "\x1B[35m"
+#define KCYN  "\x1B[90m"
+#define KWHT  "\x1B[37m"
+
 
 template <class type>
 struct StackFrame
@@ -145,44 +156,24 @@ private:
 
 template <class type>
 void printStack(Stack<type> S){
+    std::cout << std::endl;
         const char *longString = R""""(
-        
-        
-     ,---, 
-    ,---.'| 
-    |   | : 
-    '   : ' 
-    :   | | 
-    |   ' : 
-    ;   ; | 
-    '   | ' 
-    |   | : 
-    '   : ' 
-    |   | | 
-    ;   : ; 
-    |   ,/  
-    '---'         
- ___      ___ 
-|\  \    /  /|
-\ \  \  /  / /
- \ \  \/  / / 
-  \ \    / /  
-   \ \__/ /   
-    \|__|/    
-        )"""";
 
+  |
+  V
 
+)"""";
         StackFramePtr<type> temp_frame = S.peek();
         while(temp_frame != nullptr){
-            std::cout << temp_frame->data << "\n";
+            printf("%s", KBLU);
+            std::cout << temp_frame->data;
             if(temp_frame->link != nullptr){
-                std::cout << longString;
-                std::cout << "V\n";
+                printf("%s%s", KCYN, longString);
             }
-
             temp_frame = temp_frame->link;
         }
-
+        std::cout << "\n";
+        std::cout << std::endl;
     }
 
 template <class type>
