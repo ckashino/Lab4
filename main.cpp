@@ -1,24 +1,76 @@
 #include "stack.hpp"
 #include <iostream>
+#include <string>
 
 int main(){
 
-    Stack<float> new_stack;
-    new_stack.get_size();
+    Stack<int> sint1; 
+    sint1.push(1);    
+    sint1.push(2);    
+    sint1.push(3);
+    sint1.push(4);
+    sint1.push(5);
+    sint1.push(6);
 
-    new_stack.push(1.25);
-    new_stack.push(2.25);
-    new_stack.push(3.75);
-    new_stack.push(4.75);
+    Stack<int> sint2;
+    sint2 = sint1;
+
+    sint1.reverse();
+    std::cout << "sint1\n-----";
+    printStack(sint1);
+
+    printf("%s", KNRM);
+    std::cout << "\n\nsint2\n-----";
+    printStack(sint2);
+
+    Stack<double> sdouble1;
+    
+    sdouble1.push(1.5);
+    sdouble1.push(2.5);
+    sdouble1.push(3.5);
+    sdouble1.push(4.5);
+    sdouble1.push(5.5);
+    sdouble1.push(6.5);
+
+    printf("%s", KNRM);
+    std::cout << "\n\nsdouble1\n--------";
+    printStack(sdouble1);
+
+    Stack<double> sdouble2(sdouble1);
+    sdouble2.reverse();
+
+    printf("%s", KNRM);
+    std::cout << "\n\nsdouble2 top\n------------\n";
+    printf("%s", KBLU);
+    std::cout << sdouble2.peek()->data;
 
 
+    std::string userInput;
 
+    printf("%s", KNRM);
+    std::cout << "\n\n\n\nEnter a string: " << std::endl;
+    printf("%s", KCYN);
+    std::getline(std::cin, userInput);
 
-    Stack<float> new_stack2;
-    new_stack2 = new_stack;
-    printStack(new_stack2);
-    // std::cout << new_stack.empty();
-    // std::cout << new_stack.peek()->data;
+    Stack<char> palindrome; 
+    for (int i = 0; i < userInput.size(); i++)
+    {
+        palindrome.push(userInput[i]); 
+    }
+    
+    printf("%s", KNRM);
+    std::cout << std::endl << "\n\nHere is the palindrome\n----------------------\n";
+    printf("%s", KCYN);
+    std::cout << userInput;
+
+    StackFrame<char>* node = palindrome.peek();
+    while (node != NULL)
+    {
+        std::cout << node->data;
+        node = node->link;
+    }
+    std::cout << std::endl;
+    printf("%s", KNRM);
 
     return 0;
 }

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <stdio.h>
 
 #define KNRM  "\x1B[0m" // colours
@@ -128,6 +129,7 @@ public:
             reverse();
             push_to_bottom(temp_symbol);
         }
+        return 0;
     }
 
     int get_size() const
@@ -157,16 +159,18 @@ private:
 template <class type>
 void printStack(Stack<type> S){
     std::cout << std::endl;
-        const char *longString = R""""(
 
-  |
-  V
+const char *longString = R""""(
+
+ |
+ V
 
 )"""";
         StackFramePtr<type> temp_frame = S.peek();
         while(temp_frame != nullptr){
             printf("%s", KBLU);
-            std::cout << temp_frame->data;
+            std::cout << std::setw(2);
+            std::cout <<temp_frame->data;
             if(temp_frame->link != nullptr){
                 printf("%s%s", KCYN, longString);
             }
