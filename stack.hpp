@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <stdio.h>
 
-#define KNRM  "\x1B[0m" // colours
+#define KNRM  "\x1B[0m" // ansi colour codes for colour output
 #define KRED  "\x1B[31m"
 #define KGRN  "\x1B[32m"
 #define KYEL  "\x1B[33m"
@@ -23,13 +23,13 @@ struct StackFrame
 
 template <class type>
 using StackFramePtr = StackFrame<type>*;
-// typedef StackFrame<type> *StackFramePtr;
+
 
 template <class type>
 class Stack
 {
 public:
-    ~Stack()
+    ~Stack() // deconstructor that pops the enitre stack. (pop calls delete)
     {
         type next;
         while (!empty())
@@ -40,8 +40,8 @@ public:
 
 
 
-    Stack<type> operator=(const Stack &orig_stack){
-
+    Stack<type> operator=(const Stack &orig_stack){ // operator overload that deep copies by pushing each
+                                                    // value from the original stack to the bottom of the other
         StackFramePtr<type> temp_frame = orig_stack.top;
         while(temp_frame != nullptr){
             push_to_bottom(temp_frame->data);
@@ -50,7 +50,8 @@ public:
         return *this;
     }
 
-    Stack(Stack &orig_stack){
+    Stack(Stack &orig_stack){   // operator overload that deep copies by pushing each
+                                // value from the original stack to the bottom of the other
         top = nullptr;
         StackFramePtr<type> temp_frame = orig_stack.top;
         while(temp_frame != nullptr){
@@ -59,17 +60,17 @@ public:
         }
     }
 
-    Stack()
+    Stack() // default constructor that just assigns the top frame to null
     {
         top = nullptr;
     }
 
-    bool empty() const
+    bool empty() const // checks if the top frame exists (eg has been set)
     {
         return (top == nullptr);
     }
 
-    StackFramePtr<type> peek()
+    StackFramePtr<type> peek() // simply returns the top frame if it exists
     {
         if (!empty())
             return top;
@@ -77,8 +78,8 @@ public:
             return nullptr;
     }
 
-    void push(type the_symbol)
-    {
+    void push(type the_symbol) // pushes an elemet by making it the new top frame and linking the rest 
+    {                          // of the stack to it
 
         try
         {
@@ -87,7 +88,7 @@ public:
             temp_frame->link = top;
             top = temp_frame;
         }
-        catch (const std::bad_alloc &)
+        catch (const std::bad_alloc &) // catches the bad_alloc exception
         {
             exit(2);
         }
@@ -95,8 +96,8 @@ public:
         
     }
 
-    type pop()
-    {
+    type pop() // pops the top element from the stack and deletes that pointer. then makes the new top, the old
+    {          // top's link
         if (empty())
         {
             std::cout << "popping empty stack";
@@ -122,8 +123,8 @@ public:
         return result;
     }
 
-    type reverse()
-    {
+    type reverse() // recursively reverses a stack by holding each value in the function call then talking
+    {              // advantage of the other push_to_bottom function
         if (get_size() > 0)
         {
             type temp_symbol = top->data;
@@ -134,14 +135,14 @@ public:
         return 0;
     }
 
-    int get_size() const
-    {
+    int get_size() const // member function that uses the recursive get_stack_size function to find the size
+    {                   // of the stack
         return get_stack_size(top, 0);
     }
 
-    void push_to_bottom(type the_symbol)
-    {
-        if (get_size() == 0)
+    void push_to_bottom(type the_symbol) // pushes a symbol to the bottom of the stack using recursion
+    {               
+        if (get_size() == 0) // if the stack has a size of 0, add the desired element to the stack
         {
             push(the_symbol);
         }
@@ -149,8 +150,8 @@ public:
         {
             type temp_symbol = top->data;
             pop();
-            push_to_bottom(the_symbol);
-            push(temp_symbol);
+            push_to_bottom(the_symbol); // calls itself again to hold each item in the function call
+            push(temp_symbol);  // push the element back into the stack after the base case is met
         }
     }
 
@@ -159,8 +160,8 @@ private:
 };
 
 template <class type>
-void printInline(Stack<type> S){
-    StackFramePtr<type> node = S.peek();
+void printInline(Stack<type> S){ // prints the stack by looping through the top node and stoping once it reaches
+    StackFramePtr<type> node = S.peek();    // the end where the node will be null
     while (node != NULL)
     {
         std::cout << node->data;
@@ -168,8 +169,8 @@ void printInline(Stack<type> S){
     }
 }
 
-template <class type>
-void printStack(Stack<type> S){
+template <class type> // prints the stack by looping through the top node and stoping once it reaches
+void printStack(Stack<type> S){ // the end where the node will be null
     std::cout << std::endl;
 
 const char *longString = R""""(
@@ -193,8 +194,8 @@ const char *longString = R""""(
     }
 
 template <class type>
-int get_stack_size(StackFramePtr<type> cur_frame, int current_size)
-{
+int get_stack_size(StackFramePtr<type> cur_frame, int current_size) // returns the size of a stack by incrementing the
+{                                                                   // for each valid link between frames
     if (cur_frame == nullptr)
     {
         return current_size;
