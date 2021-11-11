@@ -84,15 +84,6 @@ int main(){
     return 0;
 }
 
-bool isBlankLine(char const* input)
-{
-    for (char const* temp = input; *temp; ++temp)
-    {
-        if (!isspace(*temp)) return false;
-    }
-    return true;
-}
-
 bool isBlankLine(std::string const& input)
 {
     auto temp = input.c_str();
@@ -102,4 +93,3 @@ bool isBlankLine(std::string const& input)
     }
     return true;
 }
-
