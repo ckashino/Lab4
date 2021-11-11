@@ -2,6 +2,9 @@
 #include <iostream>
 #include <string>
 
+bool isBlankLine(char const* input);
+bool isBlankLine(std::string const& input);
+
 int main(){
 
     Stack<int> sint1; 
@@ -46,11 +49,16 @@ int main(){
 
 
     std::string userInput;
+   
+    while (1) {
+        printf("%s", KNRM);
+        std::cout << "\n\n\n\nEnter a string: ";
+        printf("%s", KCYN);
+        std::getline(std::cin, userInput);
 
-    printf("%s", KNRM);
-    std::cout << "\n\n\n\nEnter a string: " << std::endl;
-    printf("%s", KCYN);
-    std::getline(std::cin, userInput);
+        if (isBlankLine(userInput)) { std::cout << "Nothing was inputted, please try again"; }
+        else break;
+    }
 
     Stack<char> palindrome; 
     for (int i = 0; i < userInput.size(); i++)
@@ -75,4 +83,18 @@ int main(){
     printf("%s", KNRM);
 
     return 0;
+}
+
+bool isBlankLine(char const* input)
+{
+    for (char const* temp = input; *temp; ++temp)
+    {
+        if (!isspace(*temp)) return false;
+    }
+    return true;
+}
+
+bool isBlankLine(std::string const& input)
+{
+    return isBlankLine(input.c_str());
 }
