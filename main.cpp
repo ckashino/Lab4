@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 
-bool isBlankLine(char const* input);
 bool isBlankLine(std::string const& input);
 
 int main(){
@@ -96,5 +95,11 @@ bool isBlankLine(char const* input)
 
 bool isBlankLine(std::string const& input)
 {
-    return isBlankLine(input.c_str());
+    auto temp1 = input.c_str();
+    for (char const* temp = temp1; *temp; ++temp)
+    {
+        if (!isspace(*temp)) return false;
+    }
+    return true;
 }
+
