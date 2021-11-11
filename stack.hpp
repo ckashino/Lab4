@@ -1,3 +1,5 @@
+#ifndef stack_hpp
+
 #include <iostream>
 #include <iomanip>
 #include <stdio.h>
@@ -157,6 +159,16 @@ private:
 };
 
 template <class type>
+void printInline(Stack<type> S){
+    StackFramePtr<type> node = S.peek();
+    while (node != NULL)
+    {
+        std::cout << node->data;
+        node = node->link;
+    }
+}
+
+template <class type>
 void printStack(Stack<type> S){
     std::cout << std::endl;
 
@@ -192,3 +204,4 @@ int get_stack_size(StackFramePtr<type> cur_frame, int current_size)
         get_stack_size(cur_frame->link, current_size + 1);
     }
 }
+#endif

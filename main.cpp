@@ -63,12 +63,14 @@ int main(){
     printf("%s", KCYN);
     std::cout << userInput;
 
-    StackFrame<char>* node = palindrome.peek();
-    while (node != NULL)
-    {
-        std::cout << node->data;
-        node = node->link;
-    }
+    printInline(palindrome);
+
+    // StackFrame<char>* node = palindrome.peek();
+    // while (node != NULL)
+    // {
+    //     std::cout << node->data;
+    //     node = node->link;
+    // }
     std::cout << std::endl;
     printf("%s", KNRM);
 
