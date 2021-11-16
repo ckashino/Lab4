@@ -124,7 +124,7 @@ public:
     }
 
     type reverse() // recursively reverses a stack by holding each value in the function call then talking
-    {              // advantage of the other push_to_bottom function
+    {              // advantage of the other push_to_bottom function. Does so in O(n^2) time
         if (get_size() > 0)
         {
             type temp_symbol = top->data;
